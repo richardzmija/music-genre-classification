@@ -1,0 +1,18 @@
+name: music-class
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - librosa
+  - numpy
+  - pylint
+  - pyqt
+  - pytest
+  - scikit-learn
+  - pandas
+  - jupyter
+  - notebook
+  - seaborn
+  - matplotlib
+prefix: C:\Users\rysza\miniconda3\envs\music-class
