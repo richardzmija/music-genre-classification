@@ -118,7 +118,7 @@ def extract_features(audio_data: NDArray[np.float32]) -> Dict[str, float]:
     
     # Tempo
     tempo, _ = librosa.beat.beat_track(y=audio_data, sr=SAMPLING_RATE)
-    features["tempo"] = tempo
+    features["tempo"] = tempo[0]  # tempo is a list
     
     # MFCCs
     mfccs = librosa.feature.mfcc(y=audio_data, sr=SAMPLING_RATE, n_mfcc=20)
