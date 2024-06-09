@@ -1,4 +1,5 @@
 import sys
+import os
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QAction, QFileDialog, 
                              QLabel, QPushButton, QLineEdit, QVBoxLayout, QWidget, 
                              QStatusBar, QDialog, QTableWidget, QTableWidgetItem, 
@@ -27,7 +28,8 @@ class MainWindow(QMainWindow):
         self._initUI()
         self.classifier = prediction.MusicGenreClassifier(MODEL_PATH, ENCODER_PATH)
         self.historyFile = HISTORY_FILE
-    
+        self.audio_file_path = None
+        
     def _initUI(self):
         self.setWindowTitle("Music Genre Classifier")
         self.setGeometry(100, 100, 800, 600)
@@ -126,12 +128,12 @@ class MainWindow(QMainWindow):
         
         if filePath:
             self.filePathEdit.setText(filePath)
+            self.audio_file_path = filePath
+            self.player.setMedia(QMediaContent(QUrl.fromLocalFile(filePath)))
             self.statusBar.showMessage("File loaded successfully", 5000)
     
     def playAudio(self):
-        filePath = self.filePathEdit.text()
-        if filePath:
-            self.player.setMedia(QMediaContent(QUrl.fromLocalFile(filePath)))
+        if self.audio_file_path is not None:
             self.player.play()
         else:
             self.statusBar.showMessage("Please load an audio file first", 5000)
@@ -154,7 +156,9 @@ class MainWindow(QMainWindow):
                 
                 # Save to history
                 with open(self.historyFile, mode="a") as file:
-                    file.write(f"{filePath},{predicted_genre},{datetime.now()}\n")
+                    file.write(f"{os.path.basename(filePath)}," + 
+                                f"{predicted_genre}," +
+                                f"{datetime.now().strftime('%H:%M:%S %d-%m-%Y')}\n")
             except Exception as e:
                 self.statusBar.showMessage(f"Error: {e}", 5000)
         else:

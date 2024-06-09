@@ -66,5 +66,5 @@ class HistoryDialog(QDialog):
     
     def deleteHistory(self):
         self.table.setRowCount(0)
-        with open("history.csv", "w") as file:
+        with open(self.history_file, "w") as file:
             pass
