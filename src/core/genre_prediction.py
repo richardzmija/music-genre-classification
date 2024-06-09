@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 from typing import Dict
 from numpy.typing import NDArray
-import audio_feature_extractor as extractor
+import src.core.audio_feature_extractor as extractor
 
 class MusicGenreClassifier:
     def __init__(self, model_path: str,
@@ -36,11 +36,9 @@ class MusicGenreClassifier:
         
         # Perform prediction
         y_pred_encoded = self.model.predict(features_df)
-        print(f"y_pred_encoded: {y_pred_encoded}")
         
         # Decode the predicted label
         y_pred = self.label_encoder.inverse_transform(y_pred_encoded)
-        print(f"y_pred: {y_pred}")
         
         return y_pred[0]
     
