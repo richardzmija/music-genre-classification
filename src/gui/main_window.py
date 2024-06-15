@@ -128,6 +128,7 @@ class MainWindow(QMainWindow):
         
         if filePath:
             self.filePathEdit.setText(filePath)
+            self.predictedGenreEdit.setText("")
             self.audio_file_path = filePath
             self.player.setMedia(QMediaContent(QUrl.fromLocalFile(filePath)))
             self.statusBar.showMessage("File loaded successfully", 5000)
